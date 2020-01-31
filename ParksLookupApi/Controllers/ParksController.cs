@@ -12,36 +12,49 @@ namespace ParksLookupApi.Controllers
     [ApiController]
     public class ParksController : ControllerBase
     {
-        // GET api/values
+        private ParksLookupApiContext _db;
+        public ParksController(ParksLookupApiContext db)
+        {
+            _db = db;
+        }
+        // GET /parks
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _db.Parks.ToList();
         }
 
-        // GET api/values/5
+        // GET /parks/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+            return _db.Parks.FirstOrDefault(entry => entry.ParkId == id);
         }
 
-        // POST api/values
+        // POST /parks
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Park thePark)
         {
+            _db.Parks.Add(thePark);
+            _db.SaveChanges();
         }
 
-        // PUT api/values/5
+        // PUT /parks/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Park thePark)
         {
+            thePark.ParkId = id;
+            _db.Entry(thePark).State = EntityState.Modified;
+            _db.SaveChanges();
         }
 
-        // DELETE api/values/5
+        // DELETE /parks/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            Park deletePark = _db.Parks.FirstOrDefault(entry => entry.ParkId == id);
+            _db.Parks.Remove(deletePark);
+            _db.SaveChanges();
         }
     }
 }
