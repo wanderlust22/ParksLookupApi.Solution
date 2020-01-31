@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ParksLookupApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ParksLookupApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ParksController : ControllerBase
     {
         // GET api/values
         [HttpGet]
