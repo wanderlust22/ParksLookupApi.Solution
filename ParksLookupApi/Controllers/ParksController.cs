@@ -19,14 +19,14 @@ namespace ParksLookupApi.Controllers
         }
         // GET /parks
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<Park>> Get()
         {
             return _db.Parks.ToList();
         }
 
         // GET /parks/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<Park> Get(int id)
         {
             return _db.Parks.FirstOrDefault(entry => entry.ParkId == id);
         }
