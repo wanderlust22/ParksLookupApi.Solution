@@ -56,5 +56,16 @@ namespace ParksLookupApi.Controllers
             _db.Parks.Remove(deletePark);
             _db.SaveChanges();
         }
+
+        // RANDOM /parks/random
+        [HttpGet("/[controller]/random")]
+        public ActionResult<Park> RandomPark()
+        {
+            int number = _db.Parks.ToList().Count;
+            Random rand = new Random();
+            int random = rand.Next(number) + 1;
+            Park randomPark = _db.Parks.FirstOrDefault(entry => entry.ParkId == random);
+            return randomPark;
+        }
     }
 }
